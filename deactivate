@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ $PATH =~ $DIR ]]; then
+    export PATH=$LAST_PATH
+    export PS1=$LAST_PS1
+else
+    echo "Not activated"
+fi

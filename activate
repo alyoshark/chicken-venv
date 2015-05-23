@@ -1,0 +1,14 @@
+#!/bin/bash
+
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+VENV_NAME=`dirname $DIR`
+VENV_NAME=`basename $VENV_NAME`
+
+if [[ $PATH =~ $DIR ]]; then
+    echo `whereis csi`
+else
+    export LAST_PATH=$PATH
+    export LAST_PS1=$PS1
+    export PATH=$DIR:$PATH
+    export PS1=($VENV_NAME)$PS1
+fi
