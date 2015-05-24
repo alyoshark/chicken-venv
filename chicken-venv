@@ -1,0 +1,32 @@
+#!/bin/bash
+
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+VENV_DIR=$1
+VERSION=${2:-current}
+PLATFORM=${3:-`uname`}
+PLATFORM=`echo ${PLATFORM,,}`
+
+if [ -d "$VENV_DIR" ]; then
+    echo "$VENV_DIR not empty!"
+    exit 1
+else
+    mkdir "$VENV_DIR"
+fi
+	
+CURR_DIR=`pwd`
+FOLDER=chicken-$RANDOM
+
+cd /tmp
+mkdir "$FOLDER"
+wget http://code.call-cc.org/releases/"$VERSION"/chicken.tar.gz -O "$FOLDER".tar.gz
+tar xfv "$FOLDER".tar.gz -C "$FOLDER"
+rm "$FOLDER".tar.gz
+cd "$FOLDER"/chicken-*
+make PLATFORM="$PLATFORM" PREFIX="$VENV_DIR" install
+
+cd /tmp
+rm -fr "$FOLDER"
+cp "$DIR"/{activate,deactivate} "$VENV_DIR"/bin/
+
+cd "$CURR_DIR"
