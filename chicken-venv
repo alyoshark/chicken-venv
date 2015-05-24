@@ -13,7 +13,9 @@ if [ -d "$VENV_DIR" ]; then
 else
     mkdir "$VENV_DIR"
 fi
-	
+
+VENV_DIR=$( cd "$VENV_DIR" && pwd )
+
 CURR_DIR=`pwd`
 FOLDER=chicken-$RANDOM
 
